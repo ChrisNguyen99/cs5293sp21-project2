@@ -5,8 +5,11 @@ import pdb
 import sys
 import sklearn
 import spacy
-
 import nltk
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
 from nltk import sent_tokenize
 from nltk import word_tokenize
 from nltk import pos_tag
@@ -59,7 +62,7 @@ def make_features(sentence, ne="PERSON"):
 def main():
     # print(len(sample))
 
-    doextraction(sys.argv[1])
+    doextraction(sys.argv[-1])
 
     features = []
     for s in sample:
