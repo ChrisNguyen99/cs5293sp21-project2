@@ -96,7 +96,11 @@ def make_features(sentence, ne="PERSON"):
 
 def main():
     # print(len(sample))
-    redact(sys.argv[1])
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input", type=str, required=True, help="input txt files")
+    
+    args = parser.parse_args()
+    redact(args.input)
     #doextraction(sys.argv[-1])
 
     #features = []
