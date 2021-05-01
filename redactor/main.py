@@ -65,19 +65,22 @@ def redact(input):
 nlp = None
 
 def get_entity(text):
+    arr = []
     """Prints the entity inside of the text."""
     for sent in sent_tokenize(text):
         for chunk in ne_chunk(pos_tag(word_tokenize(sent))):
             if hasattr(chunk, 'label') and chunk.label() == 'PERSON':
-                print(chunk.label(), ' '.join(c[0] for c in chunk.leaves()))
-
+                print(chunk.label(), arr.join(c[0] for c in chunk.leaves()))
+    return arr
 
 def doextraction(glob_text):
+    arra = []
     """Get all the files from the given glob and pass them to the extractor."""
     for thefile in glob.glob(glob_text):
         with io.open(thefile, 'r', encoding='utf-8') as fyl:
             text = fyl.read()
-            get_entity(text)
+            arra = get_entity(text)
+    return arra
 
 def make_features(sentence, ne="PERSON"):
     doc = nlp(sentence)
@@ -103,13 +106,13 @@ def main():
     
     args = parser.parse_args()
     redact(args.input)
-    doextraction("../text/*.txt")
+    entities = doextraction("../text/*.txt")
 
-    #features = []
-    #for s in sample:
-    #    features.extend(make_features(s))
+    features = []
+    for s in entities:
+        features.extend(make_features(s))
 
-    # print(features)
+    print(features)
 
     #v = DictVectorizer(sparse=False)
     #train_X = v.fit_transform([x for (x,y) in features[:-1]])
