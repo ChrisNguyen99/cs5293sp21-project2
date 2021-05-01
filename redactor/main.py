@@ -106,13 +106,14 @@ def main():
     
     args = parser.parse_args()
     #redact(args.input)
-    doc = doextraction("../text/*.txt")
-    print(doc)
-    #for entities in doc:
-        #features = []
-        #for s in entities:
-            #features.extend(make_features(s))
-        #print(features)
+    for thefile in glob.glob(glob_text):
+        with io.open(thefile, 'r', encoding='utf-8') as fyl:
+            text = fyl.read()
+            for entities in text:
+            features = []
+            for s in entities:
+                features.extend(make_features(s))
+            print(features)
 
     #v = DictVectorizer(sparse=False)
     #train_X = v.fit_transform([x for (x,y) in features[:-1]])
