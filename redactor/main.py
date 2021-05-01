@@ -57,14 +57,11 @@ def redact(input):
         redact_doc1 = redact_names(text)
         print(redact_doc1)
 
-        outfile = open("redacted/" + file, "w")
+        #print(redact_doc1)
+        outfile = open("redacted/" + file[8:], "w+")
         outfile.write(redact_doc1)
         outfile.close()
-        #print(redact_doc1)
-        print(file[7:])
-        #outfile = open("redacted/" + file[7:], "w+")
-        #outfile.write(redact_doc1)
-        #outfile.close()        
+
 nlp = None
 
 def get_entity(text):
