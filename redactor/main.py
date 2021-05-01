@@ -31,8 +31,6 @@ def redact_names(txt):
             retokenizer.merge(entity)
     for token in doc:
         if token.is_upper and len(token) > 1 or token.ent_type_ == 'PER':
-            stat.write(token.text + "|" + token.ent_type_+ "\n")
-
             for num in range(len(token)):
                 redact.append("X")
             redact.append(" ")
