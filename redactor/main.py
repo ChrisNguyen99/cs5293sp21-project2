@@ -58,7 +58,7 @@ def redact(input):
         print(redact_doc1)
 
         #print(redact_doc1)
-        outfile = open("redacted/" + file[8:], "w+")
+        outfile = open("redacted/" + file[16:], "w+")
         outfile.write(redact_doc1)
         outfile.close()
 
@@ -103,7 +103,7 @@ def main():
     
     args = parser.parse_args()
     redact(args.input)
-    #doextraction(sys.argv[-1])
+    doextraction("../text/*.txt")
 
     #features = []
     #for s in sample:
