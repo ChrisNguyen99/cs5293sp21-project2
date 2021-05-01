@@ -57,7 +57,7 @@ def redact(input):
         redact_doc1 = redact_names(text)
         #print(redact_doc1)
 
-        outfile = open("redacted/" + file, "a+")
+        outfile = open("/redacted/" + file, "w+")
         outfile.write(redact_doc1)
         outfile.close()
         
