@@ -110,9 +110,9 @@ def main():
         with io.open(thefile, 'r', encoding='utf-8') as fyl:
             text = fyl.read()
             for entities in text:
-            features = []
-            for s in entities:
-                features.extend(make_features(s))
+                features = []
+                for s in entities:
+                    features.extend(make_features(s))
             print(features)
 
     #v = DictVectorizer(sparse=False)
