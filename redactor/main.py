@@ -1,6 +1,16 @@
-
+import glob
+import io
+import os
+import pdb
+import sys
 import sklearn
 import spacy
+
+import nltk
+from nltk import sent_tokenize
+from nltk import word_tokenize
+from nltk import pos_tag
+from nltk import ne_chunk
 
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.tree import DecisionTreeClassifier
@@ -13,6 +23,21 @@ sample = ["""Rare is the red carpet where a single look summarizes the entire ev
         """FBI informant William O’Neal (LaKeith Stanfield) infiltrates the Illinois Black Panther Party and is tasked with keeping tabs on their charismatic leader, Chairman Fred Hampton (Daniel Kaluuya). A career thief, O’Neal revels in the danger of manipulating both his comrades and his handler, Special Agent Roy Mitchell. Hampton’s political prowess grows just as he’s falling in love with fellow revolutionary Deborah Johnson. Meanwhile, a battle wages for O’Neal’s soul. Will he align with the forces of good? Or subdue Hampton and The Panthers by any means, as FBI Director J. Edgar Hoover commands?"""]
 
 nlp = None
+
+def get_entity(text):
+    """Prints the entity inside of the text."""
+    for sent in sent_tokenize(text):
+        for chunk in ne_chunk(pos_tag(word_tokenize(sent))):
+            if hasattr(chunk, 'label') and chunk.label() == 'PERSON':
+                print(chunk.label(), ' '.join(c[0] for c in chunk.leaves()))
+
+
+def doextraction(glob_text):
+    """Get all the files from the given glob and pass them to the extractor."""
+    for thefile in glob.glob(glob_text):
+        with io.open(thefile, 'r', encoding='utf-8') as fyl:
+            text = fyl.read()
+            get_entity(text)
 
 def make_features(sentence, ne="PERSON"):
     doc = nlp(sentence)
@@ -33,6 +58,8 @@ def make_features(sentence, ne="PERSON"):
 
 def main():
     # print(len(sample))
+
+    doextraction(sys.argv[1])
 
     features = []
     for s in sample:
