@@ -129,9 +129,9 @@ def unredact(clf, v):
             outfile = open("output/" + thefile[8:] + ".unredacted", "w")
             outfile.write(text)
             outfile.close()
-            #Read in the file
+            
             with open("output/" + thefile[8:] + ".unredacted", 'r') as file :
-                filedata = file.read()
+                file = file.read()
 
             nlp = English()
             nlp.add_pipe('sentencizer')
@@ -146,18 +146,15 @@ def unredact(clf, v):
                     test_y = [y for (x,y) in feature[-1:]]
                     prediction = clf.predict(test_X)
                 print("Decision: ", prediction, test_y)
-
-                    # Replace the target string
                     #for i in range(len(feature[-1:])):
                         #print(test_y[i])
                         #print(prediction[i])
                     
-                    filedata = filedata.replace(str(test_y[0]), str(prediction[0]))
-                    filedata = re.sub("X+\w", random.choice(test_y), filedata)
-                    #filedata = filedata.replace(re.findall("\wXX+")[0], str(prediction[0]))
-                        # Write the file out again
+                    file = file.replace(str(test_y[0]), str(prediction[0]))
+                    file = re.sub("X+\w", random.choice(test_y), file)
+                    
                     with open("output/" + thefile[8:] + ".unredacted", 'w') as file:
-                        file.write(filedata)
+                        file.write(file)
 
 
 def main():
