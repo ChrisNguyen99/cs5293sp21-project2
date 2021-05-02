@@ -102,7 +102,7 @@ def make_features(sentence, ne="PERSON"):
     return D
 
 #train on text folder files
-def train(clf, v):
+def train(clf, v, features):
     for thefile in glob.glob("../text/*.txt"):
         with io.open(thefile, 'r', encoding='utf-8') as fyl:
             text = fyl.read()
@@ -116,6 +116,7 @@ def train(clf, v):
                 train_X = v.fit_transform([x for (x,y) in features[:-1]])
                 train_y = [y for (x,y) in features[:-1]]
                 clf.fit(train_X, train_y)
+    return features            
 
 #predict using redacted files
 def predict(clf, v):
@@ -144,7 +145,7 @@ def main():
     
     args = parser.parse_args()
     features = []
-    train(clf, v)
+    features = train(clf, v, features)
     predict(clf, v)
 
 
