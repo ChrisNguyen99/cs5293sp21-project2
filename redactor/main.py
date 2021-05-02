@@ -131,7 +131,7 @@ def unredact(clf, v):
             outfile.close()
             
             with open("output/" + thefile[8:] + ".unredacted", 'r') as file :
-                file = file.read()
+                data = file.read()
 
             nlp = English()
             nlp.add_pipe('sentencizer')
@@ -151,11 +151,11 @@ def unredact(clf, v):
                         #print(test_y[i])
                         #print(prediction[i])
                     
-                    file = file.replace(str(test_y[0]), str(prediction[0]))
-                    file = re.sub("X+\w", random.choice(test_y), file)
+                    data = data.replace(str(test_y[0]), str(prediction[0]))
+                    data = re.sub("X+\w", random.choice(test_y), data)
                     
                     with open("output/" + thefile[8:] + ".unredacted", 'w') as file:
-                        file.write(file)
+                        file.write(data)
 
 
 def main():
