@@ -19,7 +19,10 @@ from nltk import sent_tokenize
 from nltk import word_tokenize
 from nltk import pos_tag
 from nltk import ne_chunk
-
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier 
