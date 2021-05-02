@@ -47,7 +47,7 @@ def test_redact_names():
 def test_redact():
     redact_doc2 = main.redact(file2)
     outfile = open("redacted/" + file, "w")
-    assert os.stat(outfile).st_size == 0
+    assert os.stat("redacted/1_7.txt").st_size == 0
 
 def test_make_features():
     features = []
@@ -70,4 +70,4 @@ def test_train():
 def test_unredact():
     main.unredact(clf, v)
     outfile = open("output/" + file, "w")
-    assert os.stat(outfile).st_size == 0
+    assert os.stat("output/1_7.txt").st_size == 0
