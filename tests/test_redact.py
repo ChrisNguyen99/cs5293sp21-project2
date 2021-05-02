@@ -51,7 +51,7 @@ def test_redact():
 
 def test_make_features():
     features = []
-    for thefile in glob.glob("1_7.txt"):
+    for thefile in glob.glob("*.txt"):
         with io.open(thefile, 'r', encoding='utf-8') as fyl:
             text = fyl.read()
             nlp = English()
