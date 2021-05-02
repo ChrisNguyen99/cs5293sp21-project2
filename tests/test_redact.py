@@ -52,7 +52,7 @@ def test_redact():
 
 def test_make_features():
     features = []
-        features.extend(main.make_features(sample))
+    features.extend(main.make_features(sample))
     assert len(features) > 1
 
 def test_train():
