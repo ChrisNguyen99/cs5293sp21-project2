@@ -51,14 +51,7 @@ def test_redact():
 
 def test_make_features():
     features = []
-    for thefile in glob.glob("*.txt"):
-        with io.open(thefile, 'r', encoding='utf-8') as fyl:
-            text = fyl.read()
-            nlp = English()
-            nlp.add_pipe('sentencizer')
-            doc = nlp(text)
-            sentences = [str(sent).strip() for sent in doc.sents]
-    for s in sentences:
+    for s in sample:
         features.extend(main.make_features(s))
     assert len(features) > 1
 
