@@ -169,6 +169,8 @@ def main():
     parser.add_argument("--input", type=str, required=True, help="input txt files")
     
     args = parser.parse_args()
+    redact(args.input)
+    
     features = []
     features = train(clf, v, features)
     unredact(clf, v)
