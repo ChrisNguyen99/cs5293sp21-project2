@@ -145,6 +145,7 @@ def unredact(clf, v):
                     test_X = v.fit_transform([x for (x,y) in feature[-1:]])
                     test_y = [y for (x,y) in feature[-1:]]
                     prediction = clf.predict(test_X)
+                print(feature)
                 print("Decision: ", prediction, test_y)
                     #for i in range(len(feature[-1:])):
                         #print(test_y[i])
