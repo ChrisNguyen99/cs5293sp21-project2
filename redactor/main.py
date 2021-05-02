@@ -143,7 +143,7 @@ def main():
     parser.add_argument("--input", type=str, required=True, help="input txt files")
     
     args = parser.parse_args()
-
+    features = []
     train(clf, v)
     predict(clf, v)
 
