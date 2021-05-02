@@ -27,6 +27,7 @@ from sklearn.model_selection import cross_val_score
 from spacy.lang.en import English
 
 file = "1_7.txt"
+file2 = "redacted/1.7.txt"
 fi = open(file)
 text = fi.read()
 
@@ -43,7 +44,7 @@ def test_redact_names():
     assert len(redact_doc1) > 1
 
 def test_redact():
-    redact_doc2 = main.redact(file)
+    redact_doc2 = main.redact(file2)
     outfile = open("redacted/" + file, "w")
     assert len(outfile) > 1
 
