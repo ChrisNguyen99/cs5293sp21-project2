@@ -13,6 +13,7 @@ import argparse
 import numpy as np
 import fileinput
 import random
+import os
 from redactor import main
 from nltk import sent_tokenize
 from nltk import word_tokenize
@@ -46,11 +47,12 @@ def test_redact_names():
 def test_redact():
     redact_doc2 = main.redact(file2)
     outfile = open("redacted/" + file, "w")
-    assert len(outfile) > 1
+    assert os.stat(outfile).st_size == 0
 
 def test_make_features():
     features = []
-    with io.open(file, 'r', encoding='utf-8') as fyl:
+    for thefile in glob.glob("1_7.txt"):
+        with io.open(thefile, 'r', encoding='utf-8') as fyl:
             text = fyl.read()
             nlp = English()
             nlp.add_pipe('sentencizer')
@@ -68,4 +70,4 @@ def test_train():
 def test_unredact():
     main.unredact(clf, v)
     outfile = open("output/" + file, "w")
-    assert len(outfile) > 1
+    assert os.stat(outfile).st_size == 0
