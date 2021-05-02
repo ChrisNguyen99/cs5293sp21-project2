@@ -105,7 +105,7 @@ def make_features(sentence, ne="PERSON"):
 
 #train on text folder files
 def train(clf, v, features):
-    for thefile in glob.glob("../textredacted/*.txt"):
+    for thefile in glob.glob("../text/*.txt"):
         with io.open(thefile, 'r', encoding='utf-8') as fyl:
             text = fyl.read()
             nlp = English()
