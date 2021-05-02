@@ -12,6 +12,7 @@ import nltk
 import argparse
 import numpy as np
 import fileinput
+import random
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('maxent_ne_chunker')
@@ -104,7 +105,7 @@ def make_features(sentence, ne="PERSON"):
 
 #train on text folder files
 def train(clf, v, features):
-    for thefile in glob.glob("../text/*.txt"):
+    for thefile in glob.glob("../textredacted/*.txt"):
         with io.open(thefile, 'r', encoding='utf-8') as fyl:
             text = fyl.read()
             nlp = English()
@@ -124,26 +125,40 @@ def unredact(clf, v):
     for thefile in glob.glob("redacted/*.txt"):
         with io.open(thefile, 'r', encoding='utf-8') as fyl:
             text = fyl.read()
+
+            outfile = open("output/" + thefile[8:] + ".unredacted", "w")
+            outfile.write(text)
+            outfile.close()
+            #Read in the file
+            with open("output/" + thefile[8:] + ".unredacted", 'r') as file :
+                filedata = file.read()
+
             nlp = English()
             nlp.add_pipe('sentencizer')
             doc = nlp(text)
             sentences = [str(sent).strip() for sent in doc.sents]
-            feature = []
+            #feature = []
             for s in sentences:
+                feature = []
                 feature.extend(make_features(s))
-            if feature:
-                test_X = v.fit_transform([x for (x,y) in feature[-1:]])
-                test_y = [y for (x,y) in feature[-1:]]
-                prediction = clf.predict(test_X)
-                print("Decision: ", prediction, test_y)
-            
-            outfile = open("output/" + thefile[8:] + ".unredacted", "w")
-            outfile.write(doc)
-            outfile.close()
-            
-            with fileinput.FileInput("output/" + thefile + ".unredacted", inplace=True, backup='.bak') as file:
-                for line in file:
-                    print(line.replace(test_y, prediction), end='')
+                if feature:
+                    test_X = v.fit_transform([x for (x,y) in feature[-1:]])
+                    test_y = [y for (x,y) in feature[-1:]]
+                    prediction = clf.predict(test_X)
+                #print("Decision: ", prediction, test_y)
+
+                    # Replace the target string
+                    #for i in range(len(feature[-1:])):
+                        #print(test_y[i])
+                        #print(prediction[i])
+                    
+                    filedata = filedata.replace(str(test_y[0]), str(prediction[0]))
+                    filedata = re.sub("\wX+", random.choice(test_y), filedata)
+                    #filedata = filedata.replace(re.findall("\wXX+")[0], str(prediction[0]))
+                        # Write the file out again
+                    with open("output/" + thefile[8:] + ".unredacted", 'w') as file:
+                        file.write(filedata)
+
 
 def main():
     v = DictVectorizer(sparse=False)
