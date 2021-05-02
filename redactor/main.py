@@ -153,7 +153,7 @@ def unredact(clf, v):
                         #print(prediction[i])
                     
                     filedata = filedata.replace(str(test_y[0]), str(prediction[0]))
-                    filedata = re.sub("\wX+", random.choice(test_y), filedata)
+                    filedata = re.sub("X+\w", random.choice(test_y), filedata)
                     #filedata = filedata.replace(re.findall("\wXX+")[0], str(prediction[0]))
                         # Write the file out again
                     with open("output/" + thefile[8:] + ".unredacted", 'w') as file:
