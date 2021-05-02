@@ -50,15 +50,15 @@ def test_redact():
 def test_make_features():
     features = []
     for s in sample:
-        features.extend(make_features(s))
+        features.extend(main.make_features(s))
     assert len(features) > 1
 
 def test_train():
     features = []
-    features = train(clf, v, features)
+    features = main.train(clf, v, features)
     assert len(features) > 1
 
 def test_unredact():
-    unredact(clf, v)
+    main.unredact(clf, v)
     outfile = open("output/" + file, "w")
     assert len(outfile) > 1
