@@ -137,7 +137,7 @@ def unredact(clf, v):
                 prediction = clf.predict(test_X)
                 print("Decision: ", prediction, test_y)
             
-            outfile = open("output/" + thefile + ".unredacted", "w")
+            outfile = open("output/" + thefile[8:] + ".unredacted", "w")
             outfile.write(doc)
             outfile.close()
             
