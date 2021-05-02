@@ -11,6 +11,7 @@ import spacy
 import nltk
 import argparse
 import numpy as np
+import fileinput
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('maxent_ne_chunker')
@@ -118,8 +119,8 @@ def train(clf, v, features):
                 clf.fit(train_X, train_y)
     return features            
 
-#predict using redacted files
-def predict(clf, v):
+#predict using redacted files and output new files
+def unredact(clf, v):
     for thefile in glob.glob("redacted/*.txt"):
         with io.open(thefile, 'r', encoding='utf-8') as fyl:
             text = fyl.read()
@@ -133,7 +134,16 @@ def predict(clf, v):
             if feature:
                 test_X = v.fit_transform([x for (x,y) in feature[-1:]])
                 test_y = [y for (x,y) in feature[-1:]]
-                print("Decision: ", clf.predict(test_X), test_y)
+                prediction = clf.predict(test_X)
+                print("Decision: ", prediction, test_y)
+            
+            outfile = open("output/" + thefile + ".unredacted", "w")
+            outfile.write(doc)
+            outfile.close()
+            
+            with fileinput.FileInput("output/" + thefile + ".unredacted", inplace=True, backup='.bak') as file:
+            for line in file:
+            print(line.replace(test_y, prediction), end='')
 
 def main():
     v = DictVectorizer(sparse=False)
@@ -146,7 +156,7 @@ def main():
     args = parser.parse_args()
     features = []
     features = train(clf, v, features)
-    predict(clf, v)
+    unredact(clf, v)
 
 
 if __name__ == "__main__":
