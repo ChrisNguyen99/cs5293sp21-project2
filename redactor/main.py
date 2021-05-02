@@ -142,8 +142,8 @@ def unredact(clf, v):
             outfile.close()
             
             with fileinput.FileInput("output/" + thefile + ".unredacted", inplace=True, backup='.bak') as file:
-            for line in file:
-            print(line.replace(test_y, prediction), end='')
+                for line in file:
+                    print(line.replace(test_y, prediction), end='')
 
 def main():
     v = DictVectorizer(sparse=False)
